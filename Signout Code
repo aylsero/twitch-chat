@@ -1,0 +1,9 @@
+Public Class signout
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+        Me.Hide()
+    End Sub
+
+    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WebBrowser1.DocumentCompleted
+        WebBrowser1.ScriptErrorsSuppressed = True
+    End Sub
+End Class
