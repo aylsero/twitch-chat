@@ -1,0 +1,86 @@
+Public Class Settings
+
+
+    Dim x, y As Integer
+    Dim newpoint As New Point
+
+
+    Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
+        If TrackBar1.Value = TrackBar1.Maximum Then
+            Label1.Text = "0%"
+
+        ElseIf TrackBar1.Value = TrackBar1.Minimum Then
+            Label1.Text = "100%"
+        Else
+            Label1.Text = TrackBar1.Maximum - TrackBar1.Value + 1 & "%"
+        End If
+
+        Form1.Opacity = Val(TrackBar1.Maximum - TrackBar1.Value + 1) / 100
+    End Sub
+
+    Private Sub alwaysontop_CheckedChanged(sender As Object, e As EventArgs) Handles alwaysontop.CheckedChanged
+        If alwaysontop.Checked = True Then
+            My.Forms.Form1.TopMost = True
+        Else
+            If alwaysontop.Checked = False Then
+                My.Forms.Form1.TopMost = False
+            End If
+        End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles quit.Click
+        Form1.Close()
+    End Sub
+
+
+    Private Sub Settings_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        x = Control.MousePosition.X - Me.Location.X
+        y = Control.MousePosition.Y - Me.Location.Y
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles urlchangebutton.Click
+        Form1.WebBrowser1.Navigate(TextBox1.Text)
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles checkforupdates.Click
+        Dim request As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create("https://dl.dropbox.com/s/2mauczjeichi7ts/Version.txt?dl=0")
+        Dim response As System.Net.HttpWebResponse = request.GetResponse()
+        Dim sr As System.IO.StreamReader = New System.IO.StreamReader(response.GetResponseStream())
+        Dim newestversion As String = sr.ReadToEnd()
+        Dim currentversion As String = Application.ProductVersion
+
+        If newestversion.Contains(currentversion) Then
+            MsgBox("You have the latest version", MsgBoxStyle.Information, "Updater")
+        Else
+            Select Case MsgBox("A new version is available, would you like to update?", MsgBoxStyle.YesNo, "Updater")
+                Case MsgBoxResult.Yes
+                    WebBrowser1.Navigate("https://dl.dropbox.com/s/914bfmcapnqv45l/Twitch%20Chat.exe?dl=0")
+                Case MsgBoxResult.No
+                    MsgBox("Okay! There will be more features and bug fixes though.", MsgBoxStyle.Information, "Updater")
+            End Select
+        End If
+    End Sub
+
+    Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
+        Process.Start("https://www.paypal.me/terrykeeton1")
+    End Sub
+
+    Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
+        Process.Start("https://www.twitch.tv/aylsero")
+    End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+        signout.Show()
+    End Sub
+
+    Private Sub Settings_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            newpoint = Control.MousePosition
+            newpoint.X -= x
+            newpoint.Y -= y
+            Me.Location = newpoint
+            Application.DoEvents()
+        End If
+    End Sub
+
+End Class
