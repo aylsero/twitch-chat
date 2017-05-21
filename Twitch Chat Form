@@ -1,0 +1,38 @@
+Imports System.IO
+Public Class Form1
+    Dim x, y As Integer
+    Dim newpoint As New Point
+    Private Const WS_EX_TRANSPARENT As Integer = &H20
+
+    Protected Overrides ReadOnly Property CreateParams() As System.Windows.Forms.CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            cp.ExStyle = cp.ExStyle Or WS_EX_TRANSPARENT
+            Return cp
+        End Get
+    End Property
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Settings.Show()
+    End Sub
+
+    Private Sub WebBrowser1_DocumentCompleted(sender As Object, e As WebBrowserDocumentCompletedEventArgs) Handles WebBrowser1.DocumentCompleted
+        WebBrowser1.ScriptErrorsSuppressed = True
+
+    End Sub
+
+    Private Sub Settings_MouseMove(sender As Object, e As MouseEventArgs) Handles Me.MouseMove
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            newpoint = Control.MousePosition
+            newpoint.X -= x
+            newpoint.Y -= y
+            Me.Location = newpoint
+            Application.DoEvents()
+        End If
+    End Sub
+    Private Sub Settings_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
+        x = Control.MousePosition.X - Me.Location.X
+        y = Control.MousePosition.Y - Me.Location.Y
+    End Sub
+End Class
+
