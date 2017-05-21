@@ -6,7 +6,7 @@ Public Class Settings
 
 
     Private Sub TrackBar1_Scroll(sender As Object, e As EventArgs) Handles TrackBar1.Scroll
-        If TrackBar1.Value = TrackBar1.Maximum Then
+        If TrackBar1.Value = TrackBar1.Maximum Then 'this lets the user change the opacity of the form
             Label1.Text = "0%"
 
         ElseIf TrackBar1.Value = TrackBar1.Minimum Then
@@ -34,7 +34,7 @@ Public Class Settings
 
 
     Private Sub Settings_MouseDown(sender As Object, e As MouseEventArgs) Handles Me.MouseDown
-        x = Control.MousePosition.X - Me.Location.X
+        x = Control.MousePosition.X - Me.Location.X 'this makes the form moveable by dragging it
         y = Control.MousePosition.Y - Me.Location.Y
     End Sub
 
@@ -42,7 +42,7 @@ Public Class Settings
         Form1.WebBrowser1.Navigate(TextBox1.Text)
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles checkforupdates.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles checkforupdates.Click 'this is an updater that checks for new versions
         Dim request As System.Net.HttpWebRequest = System.Net.HttpWebRequest.Create("https://dl.dropbox.com/s/2mauczjeichi7ts/Version.txt?dl=0")
         Dim response As System.Net.HttpWebResponse = request.GetResponse()
         Dim sr As System.IO.StreamReader = New System.IO.StreamReader(response.GetResponseStream())
@@ -50,7 +50,7 @@ Public Class Settings
         Dim currentversion As String = Application.ProductVersion
 
         If newestversion.Contains(currentversion) Then
-            MsgBox("You have the latest version", MsgBoxStyle.Information, "Updater")
+            MsgBox("You have the latest version", MsgBoxStyle.Information, "Updater") 'this is an updater that checks for new versions
         Else
             Select Case MsgBox("A new version is available, would you like to update?", MsgBoxStyle.YesNo, "Updater")
                 Case MsgBoxResult.Yes
@@ -62,11 +62,11 @@ Public Class Settings
     End Sub
 
     Private Sub PictureBox1_Click(sender As Object, e As EventArgs) Handles PictureBox1.Click
-        Process.Start("https://www.paypal.me/terrykeeton1")
+        Process.Start("https://www.paypal.me/terrykeeton1") 'this is a donate button to help support me
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Process.Start("https://www.twitch.tv/aylsero")
+        Process.Start("https://www.twitch.tv/aylsero") 'a small label that links my twitcj, just to show who made it
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
@@ -78,7 +78,7 @@ Public Class Settings
             newpoint = Control.MousePosition
             newpoint.X -= x
             newpoint.Y -= y
-            Me.Location = newpoint
+            Me.Location = newpoint 'this makes the form moveable via dragging it
             Application.DoEvents()
         End If
     End Sub
